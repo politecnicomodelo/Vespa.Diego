@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 from persona import persona
 from alumno import alumno
 from profesor import profesor
@@ -8,9 +8,12 @@ listaplatos=[]
 listapersonas=[]
 listapedidos=[]
 while (True):
-    a=input("Pulse A para agregar \n "
+    a=input("Pulse\n"
+            "A para agregar \n "
             "M para modificar \n "
-            "E para eliminar\n ")
+            "E para eliminar\n "
+            "S para guardar \n"
+            "D para mostrar los pedidos del dia")
     if(a == "a"):
         a=input("Pulse A para agregar alumno\n "
                 "P para agregar profesor\n "
@@ -140,5 +143,46 @@ while (True):
             for item in listaplatos:
                 if(item.nombre==a):
                     listaplatos.remove(item)
-                    print("hola")
-                    print("hola")
+
+    elif (a=="s"):
+        al = open("al.txt","w")
+        for item in listapersonas:
+            if(type(item)is alumno):
+                al.write(str(item.dni)+ "| ")
+                al.write(str(item.nombre) + "| ")
+                al.write(str(item.apellido) + "| ")
+                al.write(str(item.division) + "| " "\n")
+        al.close()
+        pr = open("pr.txt", "w")
+        for item in listapersonas:
+            if (type(item) is profesor):
+                pr.write(str(item.dni) + "| ")
+                pr.write(str(item.nombre) + "| ")
+                pr.write(str(item.apellido) + "| ")
+                pr.write(str(item.descuento) + "\n")
+        pr.close()
+
+        pe = open("pe.txt","w")
+        for item in listapedidos:
+            pe.write(str(item.nro_ped)+"| ")
+            pe.write(str(item.persona.nombre)+"| ")
+            pe.write(str(item.persona.nombre)+"| ")
+            if(type(item)is profesor):
+                pe.write(str(item.persona.desuento)+"| ")
+            pe.write(str(item.plato.nombre)+"| ")
+            pe.write(str(item.plato.precio)+"| ")
+            pe.write(str(item.hora_entrega)+"| ")
+            pe.write(str(item.fecha_creacion)+"\n")
+            pe.close()
+
+        pl = open("pl.txt","w")
+        for item in listaplatos:
+            pl.write(str(item.nombre)+"| ")
+            pl.write(str(item.precio)+"\n")
+            pl.close()
+
+
+    elif(a=="d"):
+        for item in listapedidos:
+            if(item.fecha_creacion==datetime.today().date()):
+
